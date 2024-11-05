@@ -1,0 +1,32 @@
+iSarcasm + FacebookAI roberta base
+{
+    'eval_loss': 0.6366869807243347, 
+    'eval_accuracy': 0.6930835734870316, 
+    'eval_f1_score': 0.5034965034965035, 
+    'eval_runtime': 1.8824, 
+    'eval_samples_per_second': 368.687, 
+    'eval_steps_per_second': 23.375, 
+    'epoch': 5.0
+}
+
+SARC + twitter roberta base sentiment
+{
+    'eval_loss': 1.7212162017822266,
+    'eval_accuracy': 0.7692857142857142,
+    'eval_f1_score': 0.3985102420856611, 
+    'eval_runtime': 5.9096, 
+    'eval_samples_per_second': 236.904, 
+    'eval_steps_per_second': 14.891, 
+    'epoch': 4.61
+}
+
+iSarcasm + twitter roberta base sentiment
+{
+    'eval_loss': 0.5865514278411865, 
+    'eval_accuracy': 0.7550432276657061, 
+    'eval_f1_score': 0.43333333333333335, 
+    'eval_runtime': 1.9024, 
+    'eval_samples_per_second': 364.805, 
+    'eval_steps_per_second': 23.129, 
+    'epoch': 5.0
+}
