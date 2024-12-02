@@ -1,3 +1,25 @@
+Headlines + Twitter Roberta
+{
+    'eval_loss': 0.17133378982543945,
+    'eval_accuracy': 0.9326347305389222,
+    'eval_f1_score': 0.9249374478732277,
+    'eval_runtime': 3.1736,
+    'eval_samples_per_second': 841.945,
+    'eval_steps_per_second': 26.468,
+    'epoch': 5.0
+}
+
+Headlines + FacebookAI roberta base
+{
+    'eval_loss': 0.20618949830532074,
+    'eval_accuracy': 0.9240269461077845,
+    'eval_f1_score': 0.9197945476096404,
+    'eval_runtime': 3.2303,
+    'eval_samples_per_second': 827.171,
+    'eval_steps_per_second': 26.004,
+    'epoch': 5.0
+}
+
 iSarcasm + FacebookAI roberta base
 {
     'eval_loss': 0.6366869807243347, 

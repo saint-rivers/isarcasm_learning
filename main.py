@@ -10,7 +10,7 @@ from transformers import Trainer,TrainingArguments
 from transformers import AutoModelForSequenceClassification
 from transformers import AutoTokenizer
 from sklearn.metrics import accuracy_score, f1_score
-from models import FacebookRoberta, roberta_cnn
+from models import FacebookRoberta, TwitterRoberta
 from data import load_data
 
 
@@ -21,7 +21,6 @@ class SarcasmDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
-        print(item)
         item['ids'] = torch.tensor(item['input_ids'])
         item['mask'] = torch.tensor(item['attention_mask'])
         item['label'] = torch.tensor(self.labels[idx])
@@ -35,7 +34,6 @@ class SarcasmDataset(torch.utils.data.Dataset):
 class SarcasmTestDataset(torch.utils.data.Dataset):
     def __init__(self, encodings):
         self.encodings = encodings
-
     def __getitem__(self, idx):
         item = {key: torch.tensor(val[idx]) for key, val in self.encodings.items()}
         return item
@@ -71,14 +69,14 @@ def compute_metrics(p):
 
 if __name__ == '__main__':    
     torch.cuda.set_device(0)
-    train_tweets, train_labels, test_tweets, test_labels = load_data("isarc")
+    train_tweets, train_labels, test_tweets, test_labels = load_data("headlines")
 
 
     ### START ###
     # tokenizer, model = roberta_cnn()
-    tokenizer, model = roberta_cnn()
-    # model.save_pretrained("tokenizer")
+    tokenizer, model = TwitterRoberta()
 
+    tokenizer.save_pretrained('saved_tokenizer')
 
     train_encodings = tokenizer(train_tweets, truncation=True, padding=True, return_tensors = 'pt')
     test_encodings = tokenizer(test_tweets, truncation=True, padding=True, return_tensors = 'pt') #return_tensors = 'pt')
@@ -95,17 +93,17 @@ if __name__ == '__main__':
 
     training_args = TrainingArguments(
         output_dir='./res', 
-        eval_strategy="steps", 
-        num_train_epochs=5,
+        # eval_strategy="steps", 
+        num_train_epochs=10,
         per_device_train_batch_size=32,
         per_device_eval_batch_size=32, 
         warmup_steps=500, 
         weight_decay=0.01,
         logging_dir='./logs4',
-        load_best_model_at_end=True,
+        # load_best_model_at_end=True,
+        save_total_limit=1,
+        # save_strategy="epoch"
     )
-
-    # model.save_pretrained(MODEL)
 
     trainer = Trainer(
         model=model, 
@@ -116,5 +114,6 @@ if __name__ == '__main__':
     )
 
     trainer.train()
-
+    # trainer.save_model(f'headlines-twitter-model')
+    # model.save_model('headlines-twitter-model')
     print(trainer.evaluate())
